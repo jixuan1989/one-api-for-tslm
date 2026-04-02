@@ -1,0 +1,50 @@
+[INFO] 2026/04/01 - 20:48:15 | /home/hxd/codes/timer-service/one-api-for-tslm/main.go:32 [main] One API v0.0.0 started 
+[INFO] 2026/04/01 - 20:48:15 | /home/hxd/codes/timer-service/one-api-for-tslm/model/main.go:103 [openSQLite] SQL_DSN not set, using SQLite as database 
+[INFO] 2026/04/01 - 20:48:15 | /home/hxd/codes/timer-service/one-api-for-tslm/model/main.go:129 [InitDB] database migration started 
+[INFO] 2026/04/01 - 20:48:15 | /home/hxd/codes/timer-service/one-api-for-tslm/model/main.go:134 [InitDB] database migrated 
+[INFO] 2026/04/01 - 20:48:15 | /home/hxd/codes/timer-service/one-api-for-tslm/common/redis.go:20 [InitRedisClient] REDIS_CONN_STRING not set, Redis is not enabled 
+[INFO] 2026/04/01 - 20:48:15 | /home/hxd/codes/timer-service/one-api-for-tslm/main.go:65 [main] using theme default 
+[INFO] 2026/04/01 - 20:48:15 | /home/hxd/codes/timer-service/one-api-for-tslm/relay/adaptor/openai/token.go:23 [InitTokenEncoders] initializing token encoders 
+[INFO] 2026/04/01 - 20:48:16 | /home/hxd/codes/timer-service/one-api-for-tslm/relay/adaptor/openai/token.go:49 [InitTokenEncoders] token encoders initialized 
+[INFO] 2026/04/01 - 20:48:16 | /home/hxd/codes/timer-service/one-api-for-tslm/main.go:119 [main] server started on http://localhost:3000 
+[GIN] 2026/04/01 - 20:48:19 | 2026040120481996714719275886744 | 200 |      99.213µs |       127.0.0.1 |     GET /channel/add
+[GIN] 2026/04/01 - 20:48:20 | 202604012048202164923580496590 | 200 |   10.242058ms |       127.0.0.1 |     GET /static/css/main.722059cf.css
+[GIN] 2026/04/01 - 20:48:20 | 202604012048201927722269951545 | 200 |   26.151678ms |       127.0.0.1 |     GET /static/js/main.8def8f49.js
+[GIN] 2026/04/01 - 20:48:20 | 2026040120482056965964739628123 | 200 |      79.012µs |       127.0.0.1 |     GET /logo.png
+[GIN] 2026/04/01 - 20:48:20 | 2026040120482057223035965139903 | 200 |     824.881µs |       127.0.0.1 |     GET /static/media/icons.38c6d8bab26db77d8c80.woff2
+[GIN] 2026/04/01 - 20:48:20 | 2026040120482061108505191320929 | 401 |     185.739µs |       127.0.0.1 |     GET /api/channel/models
+[GIN] 2026/04/01 - 20:48:20 | 2026040120482061115383733763956 | 200 |      161.72µs |       127.0.0.1 |     GET /api/status
+[GIN] 2026/04/01 - 20:48:20 | 2026040120482061118758768233381 | 401 |     303.067µs |       127.0.0.1 |     GET /api/group/
+[GIN] 2026/04/01 - 20:48:20 | 2026040120482063625945134585016 | 200 |      85.166µs |       127.0.0.1 |     GET /login?expired=true
+[GIN] 2026/04/01 - 20:48:20 | 2026040120482069806399417480628 | 200 |     151.664µs |       127.0.0.1 |     GET /api/status
+[GIN] 2026/04/01 - 20:48:23 | 2026040120482324942352257651427 | 200 |   39.341699ms |       127.0.0.1 |    POST /api/user/login
+[GIN] 2026/04/01 - 20:48:23 | 2026040120482332227873675459410 | 200 |     396.745µs |       127.0.0.1 |     GET /api/user/self
+[GIN] 2026/04/01 - 20:48:28 | 202604012048287218505538411591 | 200 |     434.078µs |       127.0.0.1 |     GET /api/channel/?p=0
+[GIN] 2026/04/01 - 20:48:28 | 202604012048287259019260064508 | 200 |     710.147µs |       127.0.0.1 |     GET /api/models
+[GIN] 2026/04/01 - 20:48:29 | 2026040120482963088608822327836 | 200 |     139.944µs |       127.0.0.1 |     GET /api/group/
+[GIN] 2026/04/01 - 20:48:29 | 2026040120482963059203633352639 | 200 |    2.189129ms |       127.0.0.1 |     GET /api/channel/models
+[INFO] 2026/04/01 - 21:04:57 | /home/hxd/codes/timer-service/one-api-for-tslm/main.go:32 [main] One API v0.0.0 started 
+[INFO] 2026/04/01 - 21:04:57 | /home/hxd/codes/timer-service/one-api-for-tslm/model/main.go:103 [openSQLite] SQL_DSN not set, using SQLite as database 
+[INFO] 2026/04/01 - 21:04:57 | /home/hxd/codes/timer-service/one-api-for-tslm/model/main.go:129 [InitDB] database migration started 
+[INFO] 2026/04/01 - 21:04:58 | /home/hxd/codes/timer-service/one-api-for-tslm/model/main.go:134 [InitDB] database migrated 
+[INFO] 2026/04/01 - 21:04:58 | /home/hxd/codes/timer-service/one-api-for-tslm/common/redis.go:20 [InitRedisClient] REDIS_CONN_STRING not set, Redis is not enabled 
+[INFO] 2026/04/01 - 21:04:58 | /home/hxd/codes/timer-service/one-api-for-tslm/main.go:65 [main] using theme default 
+[INFO] 2026/04/01 - 21:04:58 | /home/hxd/codes/timer-service/one-api-for-tslm/relay/adaptor/openai/token.go:23 [InitTokenEncoders] initializing token encoders 
+[INFO] 2026/04/01 - 21:04:58 | /home/hxd/codes/timer-service/one-api-for-tslm/relay/adaptor/openai/token.go:49 [InitTokenEncoders] token encoders initialized 
+[INFO] 2026/04/01 - 21:04:58 | /home/hxd/codes/timer-service/one-api-for-tslm/main.go:119 [main] server started on http://localhost:3000 
+[GIN] 2026/04/01 - 21:05:01 | 2026040121050141118292705665944 | 200 |     1.23639ms |       127.0.0.1 |     GET /channel/add
+[GIN] 2026/04/01 - 21:05:01 | 2026040121050153296928404405520 | 401 |     201.998µs |       127.0.0.1 |     GET /api/channel/models
+[GIN] 2026/04/01 - 21:05:01 | 2026040121050153308357490358437 | 401 |    1.167205ms |       127.0.0.1 |     GET /api/group/
+[GIN] 2026/04/01 - 21:05:01 | 2026040121050153443954651516445 | 200 |     111.309µs |       127.0.0.1 |     GET /api/status
+[GIN] 2026/04/01 - 21:05:01 | 2026040121050155782598272641829 | 200 |      96.685µs |       127.0.0.1 |     GET /login?expired=true
+[GIN] 2026/04/01 - 21:05:01 | 2026040121050162355019604728955 | 200 |     216.687µs |       127.0.0.1 |     GET /api/status
+[GIN] 2026/04/01 - 21:05:28 | 2026040121052798788220693183414 | 200 |   39.290232ms |       127.0.0.1 |    POST /api/user/login
+[GIN] 2026/04/01 - 21:05:28 | 202604012105285782380833365002 | 200 |     499.924µs |       127.0.0.1 |     GET /api/user/self
+[GIN] 2026/04/01 - 21:05:31 | 2026040121053170058413038828760 | 200 |     2.19384ms |       127.0.0.1 |     GET /api/channel/?p=0
+[GIN] 2026/04/01 - 21:05:31 | 2026040121053170276149027942069 | 200 |    2.454823ms |       127.0.0.1 |     GET /api/models
+[GIN] 2026/04/01 - 21:05:33 | 2026040121053332716607260479027 | 200 |     142.671µs |       127.0.0.1 |     GET /api/group/
+[GIN] 2026/04/01 - 21:05:33 | 2026040121053332686703534724267 | 200 |    2.054849ms |       127.0.0.1 |     GET /api/channel/models
+[GIN] 2026/04/01 - 21:09:13 | 2026040121091310685044739995996 | 200 |     164.773µs |       127.0.0.1 |     GET /channel/add
+[GIN] 2026/04/01 - 21:09:13 | 2026040121091317434535624464254 | 200 |    1.174234ms |       127.0.0.1 |     GET /api/group/
+[GIN] 2026/04/01 - 21:09:13 | 2026040121091317353358770479165 | 200 |    2.127726ms |       127.0.0.1 |     GET /api/channel/models
+[GIN] 2026/04/01 - 21:09:13 | 2026040121091317801848977404181 | 200 |     135.106µs |       127.0.0.1 |     GET /api/status
