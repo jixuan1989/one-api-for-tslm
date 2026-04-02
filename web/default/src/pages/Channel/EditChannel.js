@@ -363,6 +363,20 @@ const EditChannel = () => {
               </Form.Field>
             )}
 
+            {inputs.type === 52 && (
+              <Form.Field>
+                <Form.Input
+                  required
+                  label='Timer REST Service 地址'
+                  name='base_url'
+                  placeholder='请输入 Timer REST Service 地址，例如：http://127.0.0.1:10810'
+                  onChange={handleInputChange}
+                  value={inputs.base_url}
+                  autoComplete='new-password'
+                />
+              </Form.Field>
+            )}
+
             {inputs.type === 18 && (
               <Form.Field>
                 <Form.Input
@@ -652,7 +666,8 @@ const EditChannel = () => {
               inputs.type !== 33 &&
               inputs.type !== 8 &&
                 inputs.type !== 50 &&
-              inputs.type !== 22 && (
+              inputs.type !== 22 &&
+              inputs.type !== 52 && (
                 <Form.Field>
                   <Form.Input
                       label={t('channel.edit.proxy_url')}

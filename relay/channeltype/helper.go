@@ -41,6 +41,8 @@ func ToAPIType(channelType int) int {
 		apiType = apitype.Replicate
 	case Proxy:
 		apiType = apitype.Proxy
+	case TimerRestService:
+		apiType = apitype.TimerRestService
 	}
 
 	return apiType

@@ -26,6 +26,10 @@ func GetByPath(path string) int {
 		relayMode = AudioTranslation
 	} else if strings.HasPrefix(path, "/v1/oneapi/proxy") {
 		relayMode = Proxy
+	} else if strings.HasPrefix(path, "/v1/forecast") || strings.HasPrefix(path, "/api/v1/forecast") {
+		relayMode = Forecast
+	} else if strings.HasPrefix(path, "/api/v1/hello_timer") {
+		relayMode = Forecast
 	}
 	return relayMode
 }

@@ -13,4 +13,6 @@ const (
 	AudioTranslation
 	// Proxy is a special relay mode for proxying requests to custom upstream
 	Proxy
+	// Forecast is for time series forecasting via Timer REST Service
+	Forecast
 )

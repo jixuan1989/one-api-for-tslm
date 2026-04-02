@@ -46,6 +46,14 @@ func getRequestModel(c *gin.Context) (string, error) {
 			modelRequest.Model = "whisper-1"
 		}
 	}
+	if strings.HasPrefix(c.Request.URL.Path, "/v1/forecast") || strings.HasPrefix(c.Request.URL.Path, "/api/v1/") {
+		if modelRequest.Model == "" && modelRequest.ModelID != nil {
+			modelRequest.Model = *modelRequest.ModelID
+		}
+		if modelRequest.Model == "" {
+			modelRequest.Model = "sundial"
+		}
+	}
 	return modelRequest.Model, nil
 }
 

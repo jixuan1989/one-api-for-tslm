@@ -86,6 +86,13 @@ export const CHANNEL_OPTIONS = [
   { key: 45, text: 'xAI', value: 45, color: 'blue' },
   { key: 46, text: 'Replicate', value: 46, color: 'blue' },
   {
+    key: 52,
+    text: 'Timer 时序大模型',
+    value: 52,
+    color: 'teal',
+    description: 'Timer REST Service 时序预测',
+  },
+  {
     key: 8,
     text: '自定义渠道',
     value: 8,

@@ -23,3 +23,7 @@ const (
 
 	Dummy // this one is only for count, do not add any channel after this
 )
+
+const (
+	TimerRestService = iota + 100 // Timer REST Service for time series forecasting
+)

@@ -191,6 +191,12 @@ export const CHANNEL_OPTIONS = {
     value: 46,
     color: 'primary'
   },
+  52: {
+    key: 52,
+    text: 'Timer 时序大模型',
+    value: 52,
+    color: 'success'
+  },
   41: {
     key: 41,
     text: 'Novita',
