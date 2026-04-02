@@ -170,6 +170,18 @@ func AddToken(c *gin.Context) {
 func DeleteToken(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 	userId := c.GetInt(ctxkey.Id)
+	// Prevent non-admin users from deleting system-saas tokens
+	role := c.GetInt(ctxkey.Role)
+	if role < model.RoleAdminUser {
+		token, err := model.GetTokenById(id)
+		if err == nil && token.Name == "system-saas" && token.UserId == userId {
+			c.JSON(http.StatusOK, gin.H{
+				"success": false,
+				"message": "系统令牌不可删除",
+			})
+			return
+		}
+	}
 	err := model.DeleteTokenById(id, userId)
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
