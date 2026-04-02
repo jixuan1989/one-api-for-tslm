@@ -32,7 +32,6 @@ func SetRelayRouter(router *gin.Engine) {
 		relayV1Router.POST("/audio/transcriptions", controller.Relay)
 		relayV1Router.POST("/audio/translations", controller.Relay)
 		relayV1Router.POST("/audio/speech", controller.Relay)
-		relayV1Router.POST("/forecast", controller.Relay)
 		relayV1Router.GET("/files", controller.RelayNotImplemented)
 		relayV1Router.POST("/files", controller.RelayNotImplemented)
 		relayV1Router.DELETE("/files/:id", controller.RelayNotImplemented)
@@ -73,8 +72,8 @@ func SetRelayRouter(router *gin.Engine) {
 		relayV1Router.GET("/threads/:id/runs/:runsId/steps", controller.RelayNotImplemented)
 	}
 
-	// Timer REST Service compatible route: /api/v1/forecast
-	timerRouter := router.Group("/api/v1")
+	// Timer REST Service routes: /timer/api/v1/*
+	timerRouter := router.Group("/timer/api/v1")
 	timerRouter.Use(middleware.RelayPanicRecover(), middleware.TokenAuth(), middleware.Distribute())
 	{
 		timerRouter.POST("/forecast", controller.Relay)

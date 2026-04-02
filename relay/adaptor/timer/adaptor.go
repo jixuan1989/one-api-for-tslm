@@ -19,9 +19,9 @@ func (a *Adaptor) Init(meta *meta.Meta) {}
 func (a *Adaptor) GetRequestURL(meta *meta.Meta) (string, error) {
 	// Transparently proxy the original path to timer-rest-service
 	if strings.Contains(meta.RequestURLPath, "hello_timer") {
-		return fmt.Sprintf("%s/api/v1/hello_timer", meta.BaseURL), nil
+		return fmt.Sprintf("%s/timer/api/v1/hello_timer", meta.BaseURL), nil
 	}
-	return fmt.Sprintf("%s/api/v1/forecast", meta.BaseURL), nil
+	return fmt.Sprintf("%s/timer/api/v1/forecast", meta.BaseURL), nil
 }
 
 func (a *Adaptor) SetupRequestHeader(c *gin.Context, req *http.Request, meta *meta.Meta) error {

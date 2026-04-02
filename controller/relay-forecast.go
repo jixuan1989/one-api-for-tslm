@@ -81,6 +81,7 @@ func RelayForecastHelper(c *gin.Context) *model.ErrorWithStatusCode {
 	if doErr != nil {
 		returnForecastPreConsumed(preConsumedQuota, meta.TokenId)
 		logger.Errorf(ctx, "DoRequest failed: %s", doErr.Error())
+		go recordForecastFailure(ctx, meta, modelName, "do_request_failed: "+doErr.Error())
 		return openai.ErrorWrapper(doErr, "do_request_failed", http.StatusInternalServerError)
 	}
 
@@ -88,6 +89,7 @@ func RelayForecastHelper(c *gin.Context) *model.ErrorWithStatusCode {
 	usage, respErr := adaptor.DoResponse(c, resp, meta)
 	if respErr != nil {
 		returnForecastPreConsumed(preConsumedQuota, meta.TokenId)
+		go recordForecastFailure(ctx, meta, modelName, fmt.Sprintf("upstream_error: %d %s", respErr.StatusCode, respErr.Error.Message))
 		return respErr
 	}
 
@@ -100,6 +102,18 @@ func returnForecastPreConsumed(preConsumedQuota int64, tokenId int) {
 	if preConsumedQuota > 0 {
 		_ = dbmodel.PostConsumeTokenQuota(tokenId, -preConsumedQuota)
 	}
+}
+
+func recordForecastFailure(ctx context.Context, meta *meta.Meta, modelName string, errMsg string) {
+	dbmodel.RecordConsumeLog(ctx, &dbmodel.Log{
+		UserId:      meta.UserId,
+		ChannelId:   meta.ChannelId,
+		ModelName:   modelName,
+		TokenName:   meta.TokenName,
+		Quota:       0,
+		Content:     "时序预测失败: " + errMsg,
+		ElapsedTime: helper.CalcElapsedTime(meta.StartTime),
+	})
 }
 
 func postConsumeForecastQuota(ctx context.Context, usage *model.Usage, meta *meta.Meta, modelName string, ratio float64, preConsumedQuota int64, modelRatio float64, groupRatio float64) {

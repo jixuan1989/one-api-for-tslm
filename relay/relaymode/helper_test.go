@@ -7,10 +7,9 @@ func TestGetByPath_Forecast(t *testing.T) {
 		path string
 		want int
 	}{
-		{"/v1/forecast", Forecast},
-		{"/api/v1/forecast", Forecast},
-		{"/api/v1/hello_timer", Forecast},
-		{"/api/v1/hello_timer?name=test", Forecast},
+		{"/timer/api/v1/forecast", Forecast},
+		{"/timer/api/v1/hello_timer", Forecast},
+		{"/timer/api/v1/hello_timer?name=test", Forecast},
 		{"/v1/chat/completions", ChatCompletions},
 		{"/v1/embeddings", Embeddings},
 		{"/v1/images/generations", ImagesGenerations},

@@ -15,7 +15,7 @@ import (
 // Integration test: mock timer-rest-service, test full request/response cycle
 func TestForecast_EndToEnd(t *testing.T) {
 	mockServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.URL.Path != "/api/v1/forecast" {
+		if r.URL.Path != "/timer/api/v1/forecast" {
 			t.Errorf("unexpected path: %s", r.URL.Path)
 		}
 		if r.Method != "POST" {
@@ -36,7 +36,7 @@ func TestForecast_EndToEnd(t *testing.T) {
 
 	// Directly call the mock server (simulating what the adaptor does)
 	reqBody := `{"targets":[{"columns":["value"],"data":[[1],[2],[3],[4],[5],[6],[7],[8],[9],[10],[11],[12],[13],[14],[15],[16]]}],"output_length_list":[3]}`
-	resp, err := http.Post(mockServer.URL+"/api/v1/forecast", "application/json", strings.NewReader(reqBody))
+	resp, err := http.Post(mockServer.URL+"/timer/api/v1/forecast", "application/json", strings.NewReader(reqBody))
 	if err != nil {
 		t.Fatalf("request failed: %v", err)
 	}
@@ -64,8 +64,8 @@ func TestForecast_EndToEnd(t *testing.T) {
 
 func TestHelloTimer_EndToEnd(t *testing.T) {
 	mockServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.URL.Path != "/api/v1/hello_timer" {
-			t.Errorf("unexpected path: %s, want /api/v1/hello_timer", r.URL.Path)
+		if r.URL.Path != "/timer/api/v1/hello_timer" {
+			t.Errorf("unexpected path: %s, want /timer/api/v1/hello_timer", r.URL.Path)
 		}
 		if r.Method != "GET" {
 			t.Errorf("unexpected method: %s, want GET", r.Method)
@@ -76,7 +76,7 @@ func TestHelloTimer_EndToEnd(t *testing.T) {
 	}))
 	defer mockServer.Close()
 
-	resp, err := http.Get(mockServer.URL + "/api/v1/hello_timer?name=world")
+	resp, err := http.Get(mockServer.URL + "/timer/api/v1/hello_timer?name=world")
 	if err != nil {
 		t.Fatalf("request failed: %v", err)
 	}
@@ -100,7 +100,7 @@ func TestForecast_WithBearerToken(t *testing.T) {
 	}))
 	defer mockServer.Close()
 
-	req, _ := http.NewRequest("POST", mockServer.URL+"/api/v1/forecast", strings.NewReader(`{"targets":[{"columns":["v"],"data":[[1]]}]}`))
+	req, _ := http.NewRequest("POST", mockServer.URL+"/timer/api/v1/forecast", strings.NewReader(`{"targets":[{"columns":["v"],"data":[[1]]}]}`))
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer sk-test-token-123")
 

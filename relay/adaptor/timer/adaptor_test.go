@@ -16,8 +16,8 @@ func TestGetRequestURL_Forecast(t *testing.T) {
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
-	if url != "http://127.0.0.1:10810/api/v1/forecast" {
-		t.Errorf("got %q, want %q", url, "http://127.0.0.1:10810/api/v1/forecast")
+	if url != "http://127.0.0.1:10810/timer/api/v1/forecast" {
+		t.Errorf("got %q, want %q", url, "http://127.0.0.1:10810/timer/api/v1/forecast")
 	}
 }
 
@@ -31,8 +31,8 @@ func TestGetRequestURL_HelloTimer(t *testing.T) {
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
-	if url != "http://127.0.0.1:10810/api/v1/hello_timer" {
-		t.Errorf("got %q, want %q", url, "http://127.0.0.1:10810/api/v1/hello_timer")
+	if url != "http://127.0.0.1:10810/timer/api/v1/hello_timer" {
+		t.Errorf("got %q, want %q", url, "http://127.0.0.1:10810/timer/api/v1/hello_timer")
 	}
 }
 
@@ -46,8 +46,8 @@ func TestGetRequestURL_V1Forecast(t *testing.T) {
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
-	if url != "http://localhost:3000/api/v1/forecast" {
-		t.Errorf("got %q, want %q", url, "http://localhost:3000/api/v1/forecast")
+	if url != "http://localhost:3000/timer/api/v1/forecast" {
+		t.Errorf("got %q, want %q", url, "http://localhost:3000/timer/api/v1/forecast")
 	}
 }
 
