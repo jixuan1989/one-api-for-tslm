@@ -89,6 +89,9 @@ var MessagePusherToken = ""
 var TurnstileSiteKey = ""
 var TurnstileSecretKey = ""
 
+// Timer SaaS integration
+var SystemSaasTokenSubnet = os.Getenv("SYSTEM_SAAS_TOKEN_SUBNET") // e.g. "127.0.0.1/32"
+
 var QuotaForNewUser int64 = 0
 var QuotaForInviter int64 = 0
 var QuotaForInvitee int64 = 0

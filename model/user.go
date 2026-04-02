@@ -161,6 +161,25 @@ func (user *User) Insert(ctx context.Context, inviterId int) error {
 		// do not block
 		logger.SysError(fmt.Sprintf("create default token for user %d failed: %s", user.Id, result.Error.Error()))
 	}
+	// create system-saas token (for timer-saas backend to call on behalf of this user)
+	var subnet *string
+	if config.SystemSaasTokenSubnet != "" {
+		subnet = &config.SystemSaasTokenSubnet
+	}
+	saasToken := Token{
+		UserId:         user.Id,
+		Name:           "system-saas",
+		Key:            random.GenerateKey(),
+		CreatedTime:    helper.GetTimestamp(),
+		AccessedTime:   helper.GetTimestamp(),
+		ExpiredTime:    -1,
+		RemainQuota:    0,
+		UnlimitedQuota: true,
+		Subnet:         subnet,
+	}
+	if err := saasToken.Insert(); err != nil {
+		logger.SysError(fmt.Sprintf("create system-saas token for user %d failed: %s", user.Id, err.Error()))
+	}
 	return nil
 }
 
