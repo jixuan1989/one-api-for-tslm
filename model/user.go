@@ -51,6 +51,8 @@ type User struct {
 	Group            string `json:"group" gorm:"type:varchar(32);default:'default'"`
 	AffCode          string `json:"aff_code" gorm:"type:varchar(32);column:aff_code;uniqueIndex"`
 	InviterId        int    `json:"inviter_id" gorm:"type:int;column:inviter_id;index"`
+	Phone            string `json:"phone" gorm:"type:varchar(20);index"`
+	PhoneVerified    bool   `json:"phone_verified" gorm:"default:false"`
 }
 
 func GetMaxUserId() int {
@@ -378,6 +380,28 @@ func GetUserUsedQuota(id int) (quota int64, err error) {
 func GetUserEmail(id int) (email string, err error) {
 	err = DB.Model(&User{}).Where("id = ?", id).Select("email").Find(&email).Error
 	return email, err
+}
+
+func GetUserByPhone(phone string) (*User, error) {
+	if phone == "" {
+		return nil, errors.New("phone is empty")
+	}
+	var user User
+	err := DB.Where("phone = ? AND phone_verified = ?", phone, true).First(&user).Error
+	return &user, err
+}
+
+func BindPhone(userId int, phone string) error {
+	// Check if phone is already bound to another user
+	var count int64
+	DB.Model(&User{}).Where("phone = ? AND phone_verified = ? AND id != ?", phone, true, userId).Count(&count)
+	if count > 0 {
+		return errors.New("该手机号已被其他账号使用")
+	}
+	return DB.Model(&User{}).Where("id = ?", userId).Updates(map[string]interface{}{
+		"phone":          phone,
+		"phone_verified": true,
+	}).Error
 }
 
 func GetUserGroup(id int) (group string, err error) {

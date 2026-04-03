@@ -184,6 +184,68 @@ func Register(c *gin.Context) {
 	return
 }
 
+// GetUserByPhone returns user info by phone number (admin only)
+func GetUserByPhone(c *gin.Context) {
+	phone := c.Param("phone")
+	if phone == "" {
+		c.JSON(http.StatusOK, gin.H{"success": false, "message": "手机号不能为空"})
+		return
+	}
+	user, err := model.GetUserByPhone(phone)
+	if err != nil {
+		c.JSON(http.StatusOK, gin.H{"success": false, "message": "未找到绑定该手机号的用户"})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"success": true,
+		"data": gin.H{
+			"id":           user.Id,
+			"username":     user.Username,
+			"display_name": user.DisplayName,
+			"role":         user.Role,
+			"status":       user.Status,
+		},
+	})
+}
+
+// BindPhone binds or updates phone number for current user
+func BindPhone(c *gin.Context) {
+	var req struct {
+		Phone string `json:"phone"`
+	}
+	if err := c.ShouldBindJSON(&req); err != nil || req.Phone == "" {
+		c.JSON(http.StatusOK, gin.H{"success": false, "message": "手机号不能为空"})
+		return
+	}
+	userId := c.GetInt(ctxkey.Id)
+	if err := model.BindPhone(userId, req.Phone); err != nil {
+		c.JSON(http.StatusOK, gin.H{"success": false, "message": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"success": true, "message": "手机号绑定成功"})
+}
+
+// PhoneLogin handles login by phone (called by saas backend after SMS verification)
+func PhoneLogin(c *gin.Context) {
+	var req struct {
+		Phone string `json:"phone"`
+	}
+	if err := c.ShouldBindJSON(&req); err != nil || req.Phone == "" {
+		c.JSON(http.StatusOK, gin.H{"success": false, "message": "手机号不能为空"})
+		return
+	}
+	user, err := model.GetUserByPhone(req.Phone)
+	if err != nil {
+		c.JSON(http.StatusOK, gin.H{"success": false, "message": "该手机号未注册"})
+		return
+	}
+	if user.Status != model.UserStatusEnabled {
+		c.JSON(http.StatusOK, gin.H{"success": false, "message": "用户已被禁用"})
+		return
+	}
+	SetupLogin(user, c)
+}
+
 func GetAllUsers(c *gin.Context) {
 	p, _ := strconv.Atoi(c.Query("p"))
 	if p < 0 {
