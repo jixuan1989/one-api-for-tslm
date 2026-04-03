@@ -163,43 +163,24 @@ func (user *User) Insert(ctx context.Context, inviterId int) error {
 		// do not block
 		logger.SysError(fmt.Sprintf("create default token for user %d failed: %s", user.Id, result.Error.Error()))
 	}
-	// create system-saas token (for timer-saas backend to call on behalf of this user)
+	// create system token (for SessionTokenAuth to bill web requests)
 	var subnet *string
 	if config.SystemSaasTokenSubnet != "" {
 		subnet = &config.SystemSaasTokenSubnet
 	}
-	forecastModels := "sundial,chronos2,timer,timer_xl,moirai2"
-	saasModels := "saas-backend"
-	systemTokens := []Token{
-		{
-			UserId:         user.Id,
-			Name:           "system-forecast",
-			Key:            random.GenerateKey(),
-			CreatedTime:    helper.GetTimestamp(),
-			AccessedTime:   helper.GetTimestamp(),
-			ExpiredTime:    -1,
-			RemainQuota:    0,
-			UnlimitedQuota: true,
-			Subnet:         subnet,
-			Models:         &forecastModels,
-		},
-		{
-			UserId:         user.Id,
-			Name:           "system-saas",
-			Key:            random.GenerateKey(),
-			CreatedTime:    helper.GetTimestamp(),
-			AccessedTime:   helper.GetTimestamp(),
-			ExpiredTime:    -1,
-			RemainQuota:    0,
-			UnlimitedQuota: true,
-			Subnet:         subnet,
-			Models:         &saasModels,
-		},
+	systemToken := Token{
+		UserId:         user.Id,
+		Name:           "system",
+		Key:            random.GenerateKey(),
+		CreatedTime:    helper.GetTimestamp(),
+		AccessedTime:   helper.GetTimestamp(),
+		ExpiredTime:    -1,
+		RemainQuota:    0,
+		UnlimitedQuota: true,
+		Subnet:         subnet,
 	}
-	for _, st := range systemTokens {
-		if err := st.Insert(); err != nil {
-			logger.SysError(fmt.Sprintf("create %s token for user %d failed: %s", st.Name, user.Id, err.Error()))
-		}
+	if err := systemToken.Insert(); err != nil {
+		logger.SysError(fmt.Sprintf("create system token for user %d failed: %s", user.Id, err.Error()))
 	}
 	return nil
 }

@@ -27,9 +27,8 @@
 
 | Token 名称 | 模型限制 | 用途 |
 |-----------|---------|------|
-| default | 无 | 用户自用 |
-| system-forecast | sundial,chronos2,timer,timer_xl,moirai2 | 网页 forecast 计费 |
-| system-saas | saas-backend | 网页 predictions 计费 |
+| default | 无 | 用户自用 API key |
+| system | 无 | 网页请求计费（子网限制，用户不可删） |
 
 ## 环境变量
 

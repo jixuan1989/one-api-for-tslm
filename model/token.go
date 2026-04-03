@@ -64,7 +64,7 @@ func SearchUserTokens(userId int, keyword string) (tokens []*Token, err error) {
 // Prefers tokens with explicit model restrictions over unrestricted ones.
 func GetUserSystemTokenForModel(userId int, modelName string) (*Token, error) {
 	var tokens []*Token
-	err := DB.Where("user_id = ? AND name LIKE 'system-%' AND status = 1", userId).Find(&tokens).Error
+	err := DB.Where("user_id = ? AND name LIKE 'system%' AND status = 1", userId).Find(&tokens).Error
 	if err != nil {
 		return nil, err
 	}

@@ -222,7 +222,7 @@ func DeleteToken(c *gin.Context) {
 	role := c.GetInt(ctxkey.Role)
 	if role < model.RoleAdminUser {
 		token, err := model.GetTokenById(id)
-		if err == nil && strings.HasPrefix(token.Name, "system-") && token.UserId == userId {
+		if err == nil && (token.Name == "system" || strings.HasPrefix(token.Name, "system-")) && token.UserId == userId {
 			c.JSON(http.StatusOK, gin.H{
 				"success": false,
 				"message": "系统令牌不可删除",
