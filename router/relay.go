@@ -74,7 +74,7 @@ func SetRelayRouter(router *gin.Engine) {
 
 	// Timer routes: all use TokenAuth for billing
 	timerRouter := router.Group("/timer/api/v1")
-	timerRouter.Use(middleware.RelayPanicRecover(), middleware.TokenAuth(), middleware.Distribute())
+	timerRouter.Use(middleware.RelayPanicRecover(), middleware.SessionTokenAuth(), middleware.Distribute())
 	{
 		timerRouter.POST("/forecast", controller.Relay)
 		timerRouter.GET("/hello_timer", controller.Relay)

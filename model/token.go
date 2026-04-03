@@ -3,6 +3,7 @@ package model
 import (
 	"errors"
 	"fmt"
+	"strings"
 
 	"gorm.io/gorm"
 
@@ -57,6 +58,41 @@ func GetAllUserTokens(userId int, startIdx int, num int, order string) ([]*Token
 func SearchUserTokens(userId int, keyword string) (tokens []*Token, err error) {
 	err = DB.Where("user_id = ?", userId).Where("name LIKE ?", keyword+"%").Find(&tokens).Error
 	return tokens, err
+}
+
+// GetUserSystemTokenForModel finds a user's active system-* token that allows the given model.
+// Prefers tokens with explicit model restrictions over unrestricted ones.
+func GetUserSystemTokenForModel(userId int, modelName string) (*Token, error) {
+	var tokens []*Token
+	err := DB.Where("user_id = ? AND name LIKE 'system-%' AND status = 1", userId).Find(&tokens).Error
+	if err != nil {
+		return nil, err
+	}
+	var fallback *Token
+	for _, t := range tokens {
+		if t.Models == nil || *t.Models == "" {
+			if fallback == nil {
+				fallback = t
+			}
+			continue
+		}
+		if isModelInTokenList(modelName, *t.Models) {
+			return t, nil // exact match preferred
+		}
+	}
+	if fallback != nil {
+		return fallback, nil
+	}
+	return nil, fmt.Errorf("用户没有可用的系统令牌（模型：%s）", modelName)
+}
+
+func isModelInTokenList(model string, models string) bool {
+	for _, m := range strings.Split(models, ",") {
+		if strings.TrimSpace(m) == model {
+			return true
+		}
+	}
+	return false
 }
 
 func ValidateUserToken(key string) (token *Token, err error) {
