@@ -197,6 +197,12 @@ export const CHANNEL_OPTIONS = {
     value: 52,
     color: 'success'
   },
+  53: {
+    key: 53,
+    text: 'Timer SaaS Backend',
+    value: 53,
+    color: 'primary'
+  },
   41: {
     key: 41,
     text: 'Novita',
