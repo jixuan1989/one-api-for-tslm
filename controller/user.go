@@ -631,9 +631,11 @@ func CreateUser(c *gin.Context) {
 	}
 	// Even for admin users, we cannot fully trust them!
 	cleanUser := model.User{
-		Username:    user.Username,
-		Password:    user.Password,
-		DisplayName: user.DisplayName,
+		Username:      user.Username,
+		Password:      user.Password,
+		DisplayName:   user.DisplayName,
+		Phone:         user.Phone,
+		PhoneVerified: user.PhoneVerified,
 	}
 	if err := cleanUser.Insert(ctx, 0); err != nil {
 		c.JSON(http.StatusOK, gin.H{

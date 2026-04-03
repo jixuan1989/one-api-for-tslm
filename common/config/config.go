@@ -141,8 +141,8 @@ var (
 	DownloadRateLimitNum            = 10
 	DownloadRateLimitDuration int64 = 60
 
-	CriticalRateLimitNum            = 20
-	CriticalRateLimitDuration int64 = 20 * 60
+	CriticalRateLimitNum            = env.Int("CRITICAL_RATE_LIMIT_NUM", 20)
+	CriticalRateLimitDuration int64 = int64(env.Int("CRITICAL_RATE_LIMIT_DURATION", 20*60))
 )
 
 var RateLimitKeyExpirationDuration = 20 * time.Minute
