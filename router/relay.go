@@ -72,19 +72,24 @@ func SetRelayRouter(router *gin.Engine) {
 		relayV1Router.GET("/threads/:id/runs/:runsId/steps", controller.RelayNotImplemented)
 	}
 
-	// Timer REST Service routes: /timer/api/v1/*
+	// Timer REST Service routes (need token auth for billing)
 	timerRouter := router.Group("/timer/api/v1")
 	timerRouter.Use(middleware.RelayPanicRecover(), middleware.TokenAuth(), middleware.Distribute())
 	{
 		timerRouter.POST("/forecast", controller.Relay)
 		timerRouter.GET("/hello_timer", controller.Relay)
-		// SaaS Backend business routes
-		timerRouter.POST("/predictions", controller.Relay)
-		timerRouter.POST("/predictions/upload", controller.Relay)
-		timerRouter.GET("/predictions", controller.Relay)
-		timerRouter.GET("/predictions/:id", controller.Relay)
-		timerRouter.DELETE("/predictions/:id", controller.Relay)
-		timerRouter.GET("/predictions/dashboard/stats", controller.Relay)
-		timerRouter.GET("/predictions/models", controller.Relay)
+	}
+
+	// SaaS Backend business routes (session auth, forwarded to saas backend)
+	saasRouter := router.Group("/timer/api/v1")
+	saasRouter.Use(middleware.RelayPanicRecover(), middleware.UserAuth(), middleware.DistributeSaas())
+	{
+		saasRouter.POST("/predictions", controller.Relay)
+		saasRouter.POST("/predictions/upload", controller.Relay)
+		saasRouter.GET("/predictions", controller.Relay)
+		saasRouter.GET("/predictions/:id", controller.Relay)
+		saasRouter.DELETE("/predictions/:id", controller.Relay)
+		saasRouter.GET("/predictions/dashboard/stats", controller.Relay)
+		saasRouter.GET("/predictions/models", controller.Relay)
 	}
 }
