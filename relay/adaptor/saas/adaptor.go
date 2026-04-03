@@ -14,6 +14,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/songquanpeng/one-api/common/config"
 	"github.com/songquanpeng/one-api/common/ctxkey"
+	oneapimodel "github.com/songquanpeng/one-api/model"
 	"github.com/songquanpeng/one-api/relay/adaptor"
 	"github.com/songquanpeng/one-api/relay/meta"
 	"github.com/songquanpeng/one-api/relay/model"
@@ -46,6 +47,12 @@ func (a *Adaptor) SetupRequestHeader(c *gin.Context, req *http.Request, meta *me
 	req.Header.Set("X-OneApi-Username", username)
 	req.Header.Set("X-OneApi-User-Role", strconv.Itoa(role))
 	req.Header.Set("X-OneApi-Timestamp", timestamp)
+
+	// Inject system-forecast token for saas-backend to call forecast via one-api
+	forecastToken, err := oneapimodel.GetUserSystemTokenForModel(userId, "sundial")
+	if err == nil && forecastToken != nil {
+		req.Header.Set("X-OneApi-Forecast-Token", forecastToken.Key)
+	}
 
 	// HMAC signature
 	if config.SaasBackendSecret != "" {
