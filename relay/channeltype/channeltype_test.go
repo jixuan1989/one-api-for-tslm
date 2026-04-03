@@ -13,6 +13,13 @@ func TestToAPIType_TimerRestService(t *testing.T) {
 	}
 }
 
+func TestToAPIType_SaasBackend(t *testing.T) {
+	got := ToAPIType(SaasBackend)
+	if got != apitype.SaasBackend {
+		t.Errorf("ToAPIType(SaasBackend) = %d, want %d", got, apitype.SaasBackend)
+	}
+}
+
 func TestToAPIType_ExistingTypes(t *testing.T) {
 	// Ensure existing mappings are not broken
 	tests := []struct {
