@@ -93,6 +93,13 @@ export const CHANNEL_OPTIONS = [
     description: 'Timer REST Service 时序预测',
   },
   {
+    key: 53,
+    text: 'Timer SaaS Backend',
+    value: 53,
+    color: 'cyan',
+    description: 'Timer SaaS 业务后端',
+  },
+  {
     key: 8,
     text: '自定义渠道',
     value: 8,

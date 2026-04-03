@@ -377,6 +377,20 @@ const EditChannel = () => {
               </Form.Field>
             )}
 
+            {inputs.type === 53 && (
+              <Form.Field>
+                <Form.Input
+                  required
+                  label='SaaS Backend 地址'
+                  name='base_url'
+                  placeholder='请输入 SaaS Backend 地址，例如：http://127.0.0.1:8080/api'
+                  onChange={handleInputChange}
+                  value={inputs.base_url}
+                  autoComplete='new-password'
+                />
+              </Form.Field>
+            )}
+
             {inputs.type === 18 && (
               <Form.Field>
                 <Form.Input
@@ -667,7 +681,8 @@ const EditChannel = () => {
               inputs.type !== 8 &&
                 inputs.type !== 50 &&
               inputs.type !== 22 &&
-              inputs.type !== 52 && (
+              inputs.type !== 52 &&
+              inputs.type !== 53 && (
                 <Form.Field>
                   <Form.Input
                       label={t('channel.edit.proxy_url')}

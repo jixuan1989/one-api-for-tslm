@@ -91,6 +91,7 @@ var TurnstileSecretKey = ""
 
 // Timer SaaS integration
 var SystemSaasTokenSubnet = os.Getenv("SYSTEM_SAAS_TOKEN_SUBNET") // e.g. "127.0.0.1/32"
+var SaasBackendSecret = os.Getenv("SAAS_BACKEND_SECRET")          // shared secret for header signing
 
 var QuotaForNewUser int64 = 0
 var QuotaForInviter int64 = 0

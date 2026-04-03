@@ -43,6 +43,8 @@ func ToAPIType(channelType int) int {
 		apiType = apitype.Proxy
 	case TimerRestService:
 		apiType = apitype.TimerRestService
+	case SaasBackend:
+		apiType = apitype.SaasBackend
 	}
 
 	return apiType

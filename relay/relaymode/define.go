@@ -15,4 +15,6 @@ const (
 	Proxy
 	// Forecast is for time series forecasting via Timer REST Service
 	Forecast
+	// SaasBusiness is for business requests forwarded to SaaS Backend
+	SaasBusiness
 )

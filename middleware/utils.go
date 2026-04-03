@@ -51,7 +51,12 @@ func getRequestModel(c *gin.Context) (string, error) {
 			modelRequest.Model = *modelRequest.ModelID
 		}
 		if modelRequest.Model == "" {
-			modelRequest.Model = "sundial"
+			// forecast defaults to sundial, business requests default to saas-backend
+			if strings.HasPrefix(c.Request.URL.Path, "/timer/api/v1/forecast") {
+				modelRequest.Model = "sundial"
+			} else {
+				modelRequest.Model = "saas-backend"
+			}
 		}
 	}
 	return modelRequest.Model, nil

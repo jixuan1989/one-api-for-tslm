@@ -38,6 +38,8 @@ func relayHelper(c *gin.Context, relayMode int) *model.ErrorWithStatusCode {
 		err = controller.RelayProxyHelper(c, relayMode)
 	case relaymode.Forecast:
 		err = RelayForecastHelper(c)
+	case relaymode.SaasBusiness:
+		err = RelaySaasHelper(c)
 	default:
 		err = controller.RelayTextHelper(c)
 	}

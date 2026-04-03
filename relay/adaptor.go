@@ -17,6 +17,7 @@ import (
 	"github.com/songquanpeng/one-api/relay/adaptor/palm"
 	"github.com/songquanpeng/one-api/relay/adaptor/proxy"
 	"github.com/songquanpeng/one-api/relay/adaptor/replicate"
+	"github.com/songquanpeng/one-api/relay/adaptor/saas"
 	"github.com/songquanpeng/one-api/relay/adaptor/tencent"
 	"github.com/songquanpeng/one-api/relay/adaptor/timer"
 	"github.com/songquanpeng/one-api/relay/adaptor/vertexai"
@@ -67,6 +68,8 @@ func GetAdaptor(apiType int) adaptor.Adaptor {
 		return &replicate.Adaptor{}
 	case apitype.TimerRestService:
 		return &timer.Adaptor{}
+	case apitype.SaasBackend:
+		return &saas.Adaptor{}
 	}
 	return nil
 }

@@ -78,5 +78,13 @@ func SetRelayRouter(router *gin.Engine) {
 	{
 		timerRouter.POST("/forecast", controller.Relay)
 		timerRouter.GET("/hello_timer", controller.Relay)
+		// SaaS Backend business routes
+		timerRouter.POST("/predictions", controller.Relay)
+		timerRouter.POST("/predictions/upload", controller.Relay)
+		timerRouter.GET("/predictions", controller.Relay)
+		timerRouter.GET("/predictions/:id", controller.Relay)
+		timerRouter.DELETE("/predictions/:id", controller.Relay)
+		timerRouter.GET("/predictions/dashboard/stats", controller.Relay)
+		timerRouter.GET("/predictions/models", controller.Relay)
 	}
 }

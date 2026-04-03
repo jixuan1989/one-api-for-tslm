@@ -26,4 +26,5 @@ const (
 
 const (
 	TimerRestService = iota + 100 // Timer REST Service for time series forecasting
+	SaasBackend                  // Timer SaaS Backend for business logic
 )

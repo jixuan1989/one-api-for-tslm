@@ -56,6 +56,8 @@ var ChannelBaseURLs = []string{
 	"https://generativelanguage.googleapis.com/v1beta/openai/", // 51
 
 	"http://127.0.0.1:10810", // 52 TimerRestService
+
+	"http://127.0.0.1:8080/api", // 53 SaasBackend
 }
 
 func init() {
