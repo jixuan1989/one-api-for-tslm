@@ -168,19 +168,38 @@ func (user *User) Insert(ctx context.Context, inviterId int) error {
 	if config.SystemSaasTokenSubnet != "" {
 		subnet = &config.SystemSaasTokenSubnet
 	}
-	saasToken := Token{
-		UserId:         user.Id,
-		Name:           "system-saas",
-		Key:            random.GenerateKey(),
-		CreatedTime:    helper.GetTimestamp(),
-		AccessedTime:   helper.GetTimestamp(),
-		ExpiredTime:    -1,
-		RemainQuota:    0,
-		UnlimitedQuota: true,
-		Subnet:         subnet,
+	forecastModels := "sundial,chronos2,timer,timer_xl,moirai2"
+	saasModels := "saas-backend"
+	systemTokens := []Token{
+		{
+			UserId:         user.Id,
+			Name:           "system-forecast",
+			Key:            random.GenerateKey(),
+			CreatedTime:    helper.GetTimestamp(),
+			AccessedTime:   helper.GetTimestamp(),
+			ExpiredTime:    -1,
+			RemainQuota:    0,
+			UnlimitedQuota: true,
+			Subnet:         subnet,
+			Models:         &forecastModels,
+		},
+		{
+			UserId:         user.Id,
+			Name:           "system-saas",
+			Key:            random.GenerateKey(),
+			CreatedTime:    helper.GetTimestamp(),
+			AccessedTime:   helper.GetTimestamp(),
+			ExpiredTime:    -1,
+			RemainQuota:    0,
+			UnlimitedQuota: true,
+			Subnet:         subnet,
+			Models:         &saasModels,
+		},
 	}
-	if err := saasToken.Insert(); err != nil {
-		logger.SysError(fmt.Sprintf("create system-saas token for user %d failed: %s", user.Id, err.Error()))
+	for _, st := range systemTokens {
+		if err := st.Insert(); err != nil {
+			logger.SysError(fmt.Sprintf("create %s token for user %d failed: %s", st.Name, user.Id, err.Error()))
+		}
 	}
 	return nil
 }

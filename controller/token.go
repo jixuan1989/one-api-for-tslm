@@ -11,6 +11,7 @@ import (
 	"github.com/songquanpeng/one-api/model"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 func GetAllTokens(c *gin.Context) {
@@ -55,6 +56,22 @@ func SearchTokens(c *gin.Context) {
 		"data":    tokens,
 	})
 	return
+}
+
+// SearchUserTokens is an admin-only endpoint to search tokens for a specific user.
+func SearchUserTokens(c *gin.Context) {
+	userId, err := strconv.Atoi(c.Param("userId"))
+	if err != nil {
+		c.JSON(http.StatusOK, gin.H{"success": false, "message": "invalid userId"})
+		return
+	}
+	keyword := c.Query("keyword")
+	tokens, err := model.SearchUserTokens(userId, keyword)
+	if err != nil {
+		c.JSON(http.StatusOK, gin.H{"success": false, "message": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"success": true, "data": tokens})
 }
 
 func GetToken(c *gin.Context) {
@@ -167,6 +184,37 @@ func AddToken(c *gin.Context) {
 	return
 }
 
+// AddTokenForUser is an admin-only endpoint to create a token for a specific user.
+func AddTokenForUser(c *gin.Context) {
+	userId, err := strconv.Atoi(c.Param("userId"))
+	if err != nil {
+		c.JSON(http.StatusOK, gin.H{"success": false, "message": "invalid userId"})
+		return
+	}
+	token := model.Token{}
+	if err := c.ShouldBindJSON(&token); err != nil {
+		c.JSON(http.StatusOK, gin.H{"success": false, "message": err.Error()})
+		return
+	}
+	cleanToken := model.Token{
+		UserId:         userId,
+		Name:           token.Name,
+		Key:            random.GenerateKey(),
+		CreatedTime:    helper.GetTimestamp(),
+		AccessedTime:   helper.GetTimestamp(),
+		ExpiredTime:    token.ExpiredTime,
+		RemainQuota:    token.RemainQuota,
+		UnlimitedQuota: token.UnlimitedQuota,
+		Models:         token.Models,
+		Subnet:         token.Subnet,
+	}
+	if err := cleanToken.Insert(); err != nil {
+		c.JSON(http.StatusOK, gin.H{"success": false, "message": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"success": true, "data": cleanToken})
+}
+
 func DeleteToken(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 	userId := c.GetInt(ctxkey.Id)
@@ -174,7 +222,7 @@ func DeleteToken(c *gin.Context) {
 	role := c.GetInt(ctxkey.Role)
 	if role < model.RoleAdminUser {
 		token, err := model.GetTokenById(id)
-		if err == nil && token.Name == "system-saas" && token.UserId == userId {
+		if err == nil && strings.HasPrefix(token.Name, "system-") && token.UserId == userId {
 			c.JSON(http.StatusOK, gin.H{
 				"success": false,
 				"message": "系统令牌不可删除",
